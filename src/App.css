@@ -1,0 +1,789 @@
+:root {
+  /* --- PALETA LIGHT FUTURISTIC --- */
+  --bg-app: #f2f4f8;       /* Gris molt clar, gairebé blanc */
+  --bg-card: rgba(255, 255, 255, 0.65); /* Vidre blanc semitransparent */
+  --bg-input: #ffffff;
+  
+  /* Textos */
+  --text-main: #1a1c25;    /* Gris fosc (gairebé negre) */
+  --text-muted: #6b7280;   /* Gris mig */
+  
+  /* Accents "Electric" */
+  --brand-gradient: linear-gradient(135deg, #2a7cff 0%, #3ddcff 100%);
+  --accent-cyan: #00b4d8;
+  --accent-magenta: #e040fb;
+  
+  /* Vores i Ombres "Premium" */
+  --border-light: rgba(255, 255, 255, 0.8);
+  --border-subtle: rgba(0, 0, 0, 0.06);
+  --shadow-soft: 0 8px 30px rgba(0, 0, 0, 0.04);
+  --shadow-glow: 0 10px 40px rgba(42, 124, 255, 0.15); /* Ombra amb un toc blau */
+  
+  --radius: 20px; /* Més arrodonit = Més modern */
+  --topbar-h: 72px;
+  --nav-h: 68px;
+}
+
+* { box-sizing: border-box; }
+
+html {
+  font-size: 17px;
+  scroll-padding-top: 150px;
+  background-color: var(--bg-app);
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: var(--text-main);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  
+  /* FALLBACK per Safari antic - Color sòlid clar */
+  background-color: #f2f4f8;
+  
+  /* FONS FUTURISTA CLAR - Safari compatible (sense 0% al final) */
+  background-image: 
+    -webkit-radial-gradient(15% 15%, circle, rgba(61, 220, 255, 0.15), transparent 50%),
+    -webkit-radial-gradient(85% 30%, circle, rgba(255, 59, 212, 0.12), transparent 50%),
+    -webkit-radial-gradient(50% 90%, circle, rgba(42, 124, 255, 0.10), transparent 60%);
+  background-image: 
+    radial-gradient(circle at 15% 15%, rgba(61, 220, 255, 0.15), transparent 50%),
+    radial-gradient(circle at 85% 30%, rgba(255, 59, 212, 0.12), transparent 50%),
+    radial-gradient(circle at 50% 90%, rgba(42, 124, 255, 0.10), transparent 60%);
+  background-attachment: scroll;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-position: 0 0;
+}
+
+/* Scrollbar personalitzada i subtil */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+#root {
+  width: 100% !important;
+  display: block !important;
+  min-height: 100vh;
+  padding-bottom: 40px;
+  overflow-y: auto !important;
+  overflow-x: hidden;
+}
+
+.auth-shell { max-width: 420px; margin: 80px auto 0; padding: 22px; }
+
+.app-shell {
+  width: 100% !important;
+  max-width: 1200px;
+  margin: 0 auto !important;
+  padding: 22px;
+  padding-bottom: 100px;
+  position: relative;
+}
+
+/* ====== TOPBAR / NAV (Glassmorphism Pur) ====== */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  width: 100%;
+  padding: 12px 0;
+  
+  /* Efecte vidre millorat */
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border-subtle);
+  
+  display: flex;
+  justify-content: center;
+}
+
+.topbar-inner {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 22px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.topbar-right { display: flex; gap: 12px; align-items: center; }
+.topbar-user { font-size: 14px; font-weight: 500; color: var(--text-muted); }
+
+/* NAV (Pestanyes) */
+.nav {
+  position: sticky;
+  top: 72px; /* Ajustat */
+  z-index: 90;
+  width: 100%;
+  padding: 10px 0 14px;
+  margin-top: 0;
+  
+  /* Vidre més transparent per a la segona capa */
+  background: rgba(255, 255, 255, 0.75);
+  -webkit-backdrop-filter: blur(15px);
+  backdrop-filter: blur(15px);
+  -webkit-mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
+  mask-image: linear-gradient(to bottom, black 85%, transparent 100%); /* Suavitza el tall inferior */
+  
+  display: flex;
+  justify-content: center;
+}
+
+.nav-inner {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 22px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* Espai extra pel contingut */
+.content { margin-top: 24px; }
+
+/* ====== BRANDING ====== */
+.brand { display: flex; align-items: center; gap: 14px; }
+.brand-logo {
+  width: 48px; height: 48px; 
+  border-radius: 14px;
+  box-shadow: 0 4px 12px rgba(42, 124, 255, 0.25); /* Ombra blava suau */
+  background: #fff;
+}
+.brand-title {
+  margin: 0; font-size: 28px; 
+  letter-spacing: -0.03em; 
+  font-weight: 800;
+  background: linear-gradient(135deg, #1a1c25 0%, #4b5563 100%); /* Text degradat subtil */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ====== BUTTONS (Estil iOS / Modern) ====== */
+.btn {
+  appearance: none;
+  border: 1px solid transparent; /* Sense vora per defecte */
+  color: #4b5563; /* Text gris per defecte (secundari) */
+  background: #ffffff;
+  font-weight: 600;
+  padding: 10px 18px;
+  border-radius: 50px; /* Pill shape (molt modern) */
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  font-size: 14px;
+}
+
+.btn:hover {
+  background: #f8fafc;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  color: #111;
+}
+
+.btn:active { transform: scale(0.97); }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+/* Botó "Refresh" o accions principals (li donem un toc de color si vols) */
+.btn-primary, button[type="submit"] {
+  background: var(--brand-gradient);
+  color: white;
+  box-shadow: 0 4px 15px rgba(42, 124, 255, 0.35);
+}
+.btn-primary:hover, button[type="submit"]:hover {
+  background: linear-gradient(135deg, #1d6df0 0%, #2ccbf0 100%);
+  color: white;
+}
+
+/* ====== INPUTS (Clean & Minimal) ====== */
+.field {
+  width: 100%;
+  max-width: 100%;
+  padding: 12px 16px;
+  border-radius: 14px;
+  border: 1px solid #e2e8f0; /* Gris molt clar */
+  background: var(--bg-input);
+  color: var(--text-main);
+  font-size: 15px;
+  outline: none;
+  transition: all 0.2s ease;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.01);
+}
+.field::placeholder { color: #9ca3af; }
+.field:focus {
+  border-color: var(--accent-cyan);
+  box-shadow: 0 0 0 4px rgba(61, 220, 255, 0.15);
+  background: #fff;
+}
+select.field { cursor: pointer; }
+
+/* ====== ALERTS ====== */
+.alert {
+  margin: 16px 0; padding: 14px; border-radius: 16px;
+  background: #fff; border-left: 4px solid var(--text-muted);
+  box-shadow: var(--shadow-soft); font-size: 14px; color: var(--text-main);
+}
+.alert-error {
+  border-left-color: #ef4444;
+  background: #fef2f2; color: #b91c1c;
+}
+
+/* ====== CARDS (L'element clau del disseny) ====== */
+.card {
+  border-radius: var(--radius);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  background: var(--bg-card); /* Vidre blanc */
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-glow); /* Brilla una mica al passar el ratolí */
+  border-color: #fff;
+}
+
+/* Elements dins de les cards */
+.card-header { font-weight: 700; color: var(--text-main); }
+.card-sub { font-size: 13px; color: var(--text-muted); }
+
+/* ====== TABLES ====== */
+.table {
+  width: 100%; border-collapse: separate; border-spacing: 0;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: #fff;
+  box-shadow: var(--shadow-soft);
+  border: 1px solid var(--border-subtle);
+}
+.table thead th {
+  text-align: left; font-size: 13px; font-weight: 600;
+  color: var(--text-muted); letter-spacing: 0.03em; text-transform: uppercase;
+  padding: 14px 16px;
+  background: #f9fafb;
+  border-bottom: 1px solid #e5e7eb;
+}
+.table tbody td {
+  padding: 14px 16px;
+  border-bottom: 1px solid #f3f4f6;
+  font-size: 14px; color: var(--text-main);
+}
+.table tbody tr:last-child td { border-bottom: none; }
+.table tbody tr:hover { background: #f8fbff; } /* Blau molt, molt suau al hover */
+
+/* ====== TITLES ====== */
+h2 {
+  margin-top: 28px; margin-bottom: 16px;
+  font-size: 22px; font-weight: 700;
+  color: var(--text-main);
+  text-align: center;
+}
+
+/* ====== UTILITIES (Centrat) ====== */
+.page {
+  display: flex; flex-direction: column; align-items: center; width: 100%;
+}
+.page > * { width: 100%; max-width: 100%; }
+
+.center-box {
+  width: 100%;
+  margin-left: auto !important; margin-right: auto !important;
+  /* Això fa que els formularis destaquin sobre el fons */
+  background: #fff;
+  padding: 24px;
+  border-radius: 24px;
+  box-shadow: var(--shadow-soft);
+  border: 1px solid rgba(255,255,255,0.8);
+}
+
+/* Correcció de text per inputs grid */
+.page > div[style*="max-width"], 
+.content > div[style*="max-width"] {
+  margin-left: auto !important; margin-right: auto !important;
+}
+
+@media (max-width: 640px) {
+  .brand-title { font-size: 22px; }
+  .brand-logo { width: 36px; height: 36px; }
+  .app-shell { padding: 16px; padding-bottom: 90px; }
+  .center-box { padding: 16px; border-radius: 18px; }
+  .topbar-right .btn { padding: 8px 12px; font-size: 13px; }
+}
+
+/* --- PARTNER LOGO (FME) --- */
+.brand-divider {
+  width: 1px;
+  height: 24px;
+  background-color: var(--border-subtle); /* Una línia separadora fina */
+  margin: 0 12px;
+}
+
+.brand-partner {
+  height: 28px; /* Més petit que el logo principal (que fa 48px) */
+  width: auto;
+  opacity: 0.6; /* Transparència per que no destaqui massa */
+  filter: grayscale(100%); /* Opcional: El fa gris per ser més elegant */
+  transition: all 0.2s ease;
+}
+
+.brand-partner:hover {
+  opacity: 1; /* Si passes el ratolí, es veu bé */
+  filter: grayscale(0%);
+}
+
+/* --- FOOTER (Copyright & Contacte) --- */
+.app-footer {
+  margin-top: 60px; /* Espai per separar-ho del contingut */
+  padding-top: 20px;
+  border-top: 1px solid var(--border-subtle);
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+.footer-content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+}
+
+.footer-links {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.footer-link {
+  color: var(--accent-cyan);
+  text-decoration: none;
+  font-weight: 600;
+  transition: opacity 0.2s;
+}
+
+.footer-link:hover {
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+/* Ajusta el padding de baix de l'app-shell perquè hi capiga el footer */
+.app-shell {
+  padding-bottom: 40px; 
+}
+
+.kiosk-actions{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-top: 12px;
+}
+
+.kiosk-bigbtn{
+  padding: 22px 18px;
+  font-size: 18px;
+  font-weight: 900;
+  border-radius: 22px;
+  min-height: 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  box-shadow: var(--shadow-glow);
+}
+
+.kiosk-sub{
+  font-size: 14px;
+  font-weight: 700;
+  opacity: .75;
+}
+
+.kiosk-methods{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.kiosk-choice{
+  padding: 16px 14px;
+  font-size: 16px;
+  font-weight: 800;
+  border-radius: 18px;
+}
+
+@media (max-width: 720px){
+  .kiosk-actions, .kiosk-methods{ grid-template-columns: 1fr; }
+  .kiosk-bigbtn{ min-height: 96px; }
+}
+/* --- KIOSK MODE INTERACTIU --- */
+
+.kiosk-step-title {
+  font-size: 20px;
+  font-weight: 800;
+  text-align: center;
+  margin-bottom: 24px;
+  opacity: 0.9;
+}
+
+/* Graella de 2 columnes per als botons grans */
+.kiosk-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 10px;
+}
+
+/* Botó gegant (Jugadors / Mètode) */
+.kiosk-bigbtn {
+  appearance: none;
+  border: none;
+  background: #ffffff;
+  padding: 30px 20px;
+  border-radius: 24px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.05); /* Ombra suau */
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
+  border: 2px solid transparent;
+  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 160px; /* Alçada mínima per fer-ho fàcil de tocar a l'iPad */
+}
+
+.kiosk-bigbtn:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+}
+
+.kiosk-bigbtn:active {
+  transform: scale(0.96);
+}
+
+/* Estils específics quan seleccionem guanyador */
+.kiosk-bigbtn.winner-a { background: linear-gradient(135deg, #e0f2fe 0%, #fff 100%); border-color: #3b82f6; }
+.kiosk-bigbtn.winner-b { background: linear-gradient(135deg, #fce7f3 0%, #fff 100%); border-color: #ec4899; }
+
+/* Tipografia dins del botó */
+.kiosk-bigname {
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--text-main);
+  text-align: center;
+  line-height: 1.2;
+}
+.kiosk-sublabel {
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+/* Botó de tornar enrere */
+.kiosk-back {
+  margin-top: 24px;
+  color: var(--text-muted);
+  background: none;
+  border: none;
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+/* Adaptació mòbil (un a sota l'altre si la pantalla és molt petita) */
+@media (max-width: 600px) {
+  .kiosk-actions { grid-template-columns: 1fr; }
+  .kiosk-bigbtn { min-height: 100px; flex-direction: row; justify-content: flex-start; padding: 20px; }
+}
+
+/* --- MODAL (Finestra emergent) --- */
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: rgba(0, 0, 0, 0.4); /* Fons fosc semitransparent */
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px); /* Efecte borrós al fons */
+  z-index: 2000; /* Per sobre de tot (inclús la topbar) */
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.modal-content {
+  width: 100%;
+  max-width: 400px;
+  background: #fff;
+  padding: 24px;
+  border-radius: 24px;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+  border: 1px solid rgba(255,255,255,0.8);
+  animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes popIn {
+  from { opacity: 0; transform: scale(0.9) translateY(20px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+/* --- MATCH CARDS (Usuari normal) --- */
+
+.match-card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: var(--shadow-soft);
+  border: 1px solid rgba(0,0,0,0.04);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.match-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-glow);
+}
+
+.match-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.match-vs {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.match-vs span { color: var(--accent-cyan); font-weight: 400; font-size: 14px; }
+
+.match-meta {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Selector de Mètode (Pills) */
+.method-selector {
+  display: flex;
+  background: #f1f5f9;
+  padding: 4px;
+  border-radius: 12px;
+  margin-bottom: 16px;
+  gap: 4px;
+}
+
+.method-btn {
+  flex: 1;
+  border: none;
+  background: transparent;
+  padding: 8px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.method-btn.active {
+  background: #fff;
+  color: var(--text-main);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+/* Botons de reportar */
+.report-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.btn-report {
+  width: 100%;
+  padding: 12px;
+  border-radius: 14px;
+  border: 2px solid transparent;
+  background: #f8fafc;
+  color: var(--text-main);
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.btn-report:hover { background: #e2e8f0; }
+
+.btn-report.winner {
+  background: #ecfdf5; /* Verd molt suau */
+  color: #059669;
+  border-color: #a7f3d0;
+}
+
+/* Estats */
+.status-badge {
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+.status-pending { background: #fff7ed; color: #c2410c; }
+.status-reported { background: #eff6ff; color: #1d4ed8; }
+.status-confirmed { background: #f0fdf4; color: #15803d; }
+
+/* --- NOU CREATE MATCH WIDGET --- */
+.vs-widget {
+  background: #fff;
+  border-radius: 24px;
+  padding: 24px;
+  box-shadow: var(--shadow-soft);
+  margin-bottom: 30px;
+  border: 1px solid rgba(255,255,255,0.5);
+}
+
+.vs-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.player-slot {
+  flex: 1;
+  background: #f8fafc;
+  border: 2px dashed #cbd5e1;
+  border-radius: 16px;
+  padding: 16px;
+  text-align: center;
+  min-height: 80px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.2s;
+}
+
+.player-slot.filled {
+  background: #f0f9ff;
+  border: 2px solid #bae6fd;
+  border-style: solid;
+}
+
+.player-slot-label { font-size: 11px; text-transform: uppercase; color: #94a3b8; font-weight: 700; margin-bottom: 4px; }
+.player-slot-name { font-size: 16px; font-weight: 800; color: #0f172a; }
+.vs-badge { font-weight: 900; color: #cbd5e1; font-style: italic; font-size: 20px; }
+
+/* Resultats de cerca elegants */
+.search-results-list {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  overflow: hidden;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.search-item {
+  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #f1f5f9;
+  cursor: pointer;
+  transition: background 0.1s;
+}
+.search-item:last-child { border-bottom: none; }
+.search-item:hover { background: #f8fafc; }
+
+/* --- MODAL REPORT RESULTAT --- */
+.report-toggle-container {
+  background: #f1f5f9;
+  padding: 4px;
+  border-radius: 14px;
+  display: flex;
+  margin-bottom: 24px;
+}
+
+.report-toggle-btn {
+  flex: 1;
+  border: none;
+  background: transparent;
+  padding: 10px;
+  border-radius: 12px;
+  font-weight: 600;
+  color: #64748b;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.report-toggle-btn.active {
+  background: #fff;
+  color: #0f172a;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.winner-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.winner-btn {
+  background: #fff;
+  border: 2px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.winner-btn:hover { border-color: #cbd5e1; background: #f8fafc; }
+.winner-btn h4 { margin: 0; font-size: 16px; color: #0f172a; }
+.winner-btn span { font-size: 12px; color: #94a3b8; }
+
+/* Botó petit "Reportar" a la targeta */
+.btn-mini-action {
+  background: #0f172a;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 30px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(15, 23, 42, 0.2);
+  transition: transform 0.2s;
+}
+.btn-mini-action:hover { transform: translateY(-2px); }
